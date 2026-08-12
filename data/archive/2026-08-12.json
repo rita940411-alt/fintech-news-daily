@@ -1,0 +1,62 @@
+{
+  "report_date": "2026-08-12",
+  "generated_at": "2026-08-12T16:06:49+08:00",
+  "timezone": "Asia/Taipei",
+  "selection_window": "72h",
+  "articles": [
+    {
+      "title_zh": "Edge 攜手 Socure 推出早期詐騙篩選服務 EDGE Screen",
+      "title_original": "Edge partners with Socure on early fraud screening",
+      "source": "FinTech Global",
+      "source_type": "independent_media",
+      "url": "https://fintech.global/2026/08/10/edge-partners-with-socure-on-early-fraud-screening/",
+      "published_at": "2026-08-10",
+      "event_date": "2026-08-10",
+      "verified_at": "2026-08-12T16:06:49+08:00",
+      "freshness_note": "本篇為 FinTech Global（署名記者 jhaxell）於事件當日發布的獨立編輯報導，event_date 與 published_at 相同，屬 72 小時內首次公開報導，無新鮮度疑慮。",
+      "selected_reason": "結合現金流數據與 AI 身分風險評分，於貸款申請最早階段偵測詐騙，屬金融機構 AI 與數據分析應用的具體案例。",
+      "key_points": [
+        "Edge 與 Socure 於 2026 年 8 月 10 日宣布合作，推出 EDGE Screen，將 Socure 的身分與詐騙偵測能力與 Edge 的現金流資料機器學習評分整合，在放款申請流程最前端提供單一篩選畫面。",
+        "Edge 目前涵蓋約 500 萬名消費者身分資料，並與超過 70 家放款機構合作；Socure 服務超過 3,000 家機構、遍及 190 個國家，包括美國前 20 大銀行中的 19 家與 2,000 多家金融科技公司。",
+        "此整合可在毫秒內回傳身分信心與詐騙風險資訊，且不需消費者重新進行銀行帳戶驗證，目的是在申請進入後續流程前及早攔截由 AI 驅動、看似真實的詐騙行為，降低放款機構的行銷浪費與人工審查負擔。"
+      ],
+      "mermaid": "flowchart TD\n    A[\"Edge 與 Socure 宣布合作\"]:::gray\n    A --> B[\"Edge 現金流機器學習評分\"]:::green\n    A --> C[\"Socure 身分與詐騙偵測\"]:::purple\n    B --> D[\"EDGE Screen 整合畫面\"]:::blue\n    C --> D\n    D --> E[\"毫秒級回傳身分與詐騙風險\"]:::blue\n    D --> F[\"涵蓋500萬身分/70+放款機構\"]:::green\n    E --> G[\"及早攔截AI驅動詐騙\"]:::orange\n    G --> H[\"降低人工審查與行銷浪費\"]:::orange\n\n    classDef gray fill:#9e9e9e,color:#ffffff;\n    classDef green fill:#4caf50,color:#ffffff;\n    classDef purple fill:#9c27b0,color:#ffffff;\n    classDef blue fill:#2196f3,color:#ffffff;\n    classDef orange fill:#ff9800,color:#ffffff;"
+    },
+    {
+      "title_zh": "eflow 推出 PATH AI Analyst，趁 AI 監控熱潮擴張北美業務",
+      "title_original": "eflow expands North America amid AI surveillance boom",
+      "source": "FinTech Global",
+      "source_type": "independent_media",
+      "url": "https://fintech.global/2026/08/11/eflow-expands-north-america-amid-ai-surveillance-boom/",
+      "published_at": "2026-08-11",
+      "event_date": "2026-08-11",
+      "verified_at": "2026-08-12T16:06:49+08:00",
+      "freshness_note": "本篇為 FinTech Global（署名記者 jhaxell）於事件當日發布的獨立編輯報導，event_date 與 published_at 相同，屬 72 小時內首次公開報導，無新鮮度疑慮。此篇取代原本已淘汰的 Bretton AI／MVB Bank 報導，同屬監理科技與 AI 法規主題。",
+      "selected_reason": "監理科技業者推出生成式 AI 驅動的市場濫用調查工具並藉此擴張北美業務，屬監理科技與 AI 法規優先主題下的具體應用案例。",
+      "key_points": [
+        "英國監理科技公司 eflow 於 2026 年 8 月 11 日宣布北美業務擴張，2026 年上半年北美客戶基數成長 75%，新增 14 個新客戶及 6 個既有客戶的擴展部署，合計 20 個新增或擴展客戶關係，並聘請 Jon Drawdy 擔任北美團隊客戶實施專家。",
+        "eflow 同時推出 PATH AI Analyst 工具，讓合規團隊可用自然語言提示調查潛在市場濫用警示，在數秒內產生情境化洞察、測試假設情境、找出相關交易模式並產出監管報告；公司並與 Iress 達成戰略合作夥伴關係，同時由 Kenn Rodrigues 加入支援亞太地區擴展。",
+        "eflow 執行長 Ben Parker 表示，金融市場日益複雜，全球客戶對其交易監控與市場濫用偵測技術的需求持續成長；PATH AI Analyst 的推出顯示監理科技業者正將生成式 AI 工具導入第一線合規調查流程。"
+      ],
+      "mermaid": "flowchart TD\n    A[\"eflow宣布北美業務擴張\"]:::gray\n    A --> B[\"北美客戶基數成長75%\"]:::green\n    A --> C[\"推出PATH AI Analyst工具\"]:::purple\n    B --> D[\"20個新增/擴展客戶關係\"]:::blue\n    B --> E[\"聘請Jon Drawdy等人才\"]:::blue\n    C --> F[\"自然語言調查市場濫用警示\"]:::blue\n    C --> G[\"數秒產出監管報告\"]:::orange\n    A --> H[\"與Iress建立戰略夥伴關係\"]:::orange\n\n    classDef gray fill:#9e9e9e,color:#ffffff;\n    classDef green fill:#4caf50,color:#ffffff;\n    classDef purple fill:#9c27b0,color:#ffffff;\n    classDef blue fill:#2196f3,color:#ffffff;\n    classDef orange fill:#ff9800,color:#ffffff;"
+    },
+    {
+      "title_zh": "Finster AI 獲 UBS 策略投資，強化投資銀行 AI 工作流程",
+      "title_original": "Finster AI Secures Strategic Investment from UBS to Transform Investment Banking Workflows",
+      "source": "FF News",
+      "source_type": "independent_media",
+      "url": "https://ffnews.com/news/finster-ai-secures-strategic-investment-from-ubs-to-transform-investment-banking-workflows",
+      "published_at": "2026-08-10",
+      "event_date": "2026-08-10",
+      "verified_at": "2026-08-12T16:06:49+08:00",
+      "freshness_note": "本篇為 FF News（記者 Lauren Towner）於事件當日發布的獨立編輯報導，除轉述 UBS／Finster AI 官方公告事實外，另附「FF News Take」原創市場評論區塊，event_date 與 published_at 相同，屬 72 小時內首次公開報導。原先採用的 PR Newswire 企業新聞稿版本已改列為候選淘汰紀錄，改採本篇具獨立編輯分析之來源。",
+      "selected_reason": "UBS 策略投資 AI 原生金融資料整合平台，用於強化投資銀行研究分析工作流程效率，屬 AI 金融分析與資料治理交集的重要應用案例。",
+      "key_points": [
+        "UBS 於 2026 年 8 月 10 日宣布策略投資 AI 原生金融平台 Finster AI，資金將用於強化其自然語言處理技術，協助投資銀行從大量文件中快速提取關鍵財務洞見並自動化複雜財務工作流程。",
+        "Finster AI 宣稱其平台可使文件審查時間減少 40%，藉此提升投資銀行研究與分析工作流程的效率。",
+        "FF News 編輯評論指出，UBS 此次投資顯示銀行業「泛用型 AI」階段已經過去，透過投資具深度領域專長的專業 AI 業者搶占先機，此舉可能促使其他大型銀行加快自身的創投布局。"
+      ],
+      "mermaid": "flowchart TD\n    A[\"UBS策略投資Finster AI\"]:::gray\n    A --> B[\"強化自然語言處理技術\"]:::green\n    A --> C[\"FF News獨立編輯評論\"]:::purple\n    B --> D[\"文件審查時間減少40%\"]:::blue\n    B --> E[\"自動化財務工作流程\"]:::blue\n    C --> F[\"泛用型AI階段已過去\"]:::orange\n    C --> G[\"專業AI業者取得先機\"]:::orange\n    G --> H[\"可能促使其他銀行加快創投布局\"]:::orange\n\n    classDef gray fill:#9e9e9e,color:#ffffff;\n    classDef green fill:#4caf50,color:#ffffff;\n    classDef purple fill:#9c27b0,color:#ffffff;\n    classDef blue fill:#2196f3,color:#ffffff;\n    classDef orange fill:#ff9800,color:#ffffff;"
+    }
+  ]
+}

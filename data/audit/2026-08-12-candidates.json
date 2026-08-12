@@ -1,0 +1,116 @@
+{
+  "report_date": "2026-08-12",
+  "searched_at": "2026-08-12T16:06:49+08:00",
+  "timezone": "Asia/Taipei",
+  "candidate_count": 9,
+  "candidates": [
+    {
+      "title": "Edge partners with Socure on early fraud screening",
+      "source": "FinTech Global",
+      "url": "https://fintech.global/2026/08/10/edge-partners-with-socure-on-early-fraud-screening/",
+      "published_at": "2026-08-10",
+      "event_date": "2026-08-10",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "selected",
+      "rejection_reason": null,
+      "duplicate_of": null
+    },
+    {
+      "title": "eflow expands North America amid AI surveillance boom",
+      "source": "FinTech Global",
+      "url": "https://fintech.global/2026/08/11/eflow-expands-north-america-amid-ai-surveillance-boom/",
+      "published_at": "2026-08-11",
+      "event_date": "2026-08-11",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "selected",
+      "rejection_reason": null,
+      "duplicate_of": null
+    },
+    {
+      "title": "Finster AI Secures Strategic Investment from UBS to Transform Investment Banking Workflows",
+      "source": "FF News",
+      "url": "https://ffnews.com/news/finster-ai-secures-strategic-investment-from-ubs-to-transform-investment-banking-workflows",
+      "published_at": "2026-08-10",
+      "event_date": "2026-08-10",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "selected",
+      "rejection_reason": null,
+      "duplicate_of": null
+    },
+    {
+      "title": "Bretton AI lands multi-year MVB Bank compliance deal",
+      "source": "FinTech Global",
+      "url": "https://fintech.global/2026/08/11/bretton-ai-lands-multi-year-mvb-bank-compliance-deal/",
+      "published_at": "2026-08-11",
+      "event_date": "2026-08-06",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "rejected",
+      "rejection_reason": "原始事件（MVB Bank選用Bretton AI）已由MVB Financial Corp.透過BusinessWire於2026-08-06發布『CORRECTING and REPLACING』新聞稿公告，event_date應為2026-08-06。FinTech Global於2026-08-11刊出的報導僅重述該新聞稿內容（合約範圍、human-in-the-loop流程、計價模式、MVB擴充法遵量能之說法），未見任何新增事實、獨立採訪或新數據，依新鮮度規則第5點不得以二次報導日期入選，event_date已超過72小時新鮮度窗口。",
+      "duplicate_of": null
+    },
+    {
+      "title": "Finster AI secures investment from UBS to advance AI innovation in investment banking",
+      "source": "PR Newswire",
+      "url": "https://www.prnewswire.com/news-releases/finster-ai-secures-investment-from-ubs-to-advance-ai-innovation-in-investment-banking-302846425.html",
+      "published_at": "2026-08-10",
+      "event_date": "2026-08-10",
+      "source_type": "press_release",
+      "fetch_status": "success",
+      "decision": "rejected",
+      "rejection_reason": "與同一事件的FF News獨立報導（見本清單FF News條目）重複。新鮮度本身合格（event_date 2026-08-10，在72小時內），但屬企業新聞稿（PR Newswire），本期已有其他2篇independent_media來源，改採具備FF News編輯獨立分析（『FF NEWS TAKE』區塊）之版本以提升來源分級品質，故不採用本篇作為最終引用來源。",
+      "duplicate_of": "https://ffnews.com/news/finster-ai-secures-strategic-investment-from-ubs-to-transform-investment-banking-workflows"
+    },
+    {
+      "title": "Moody's warns bank AI race risks \"systemic dependency\" on Silicon Valley",
+      "source": "EnterpriseAM（轉引The Guardian）",
+      "url": "https://enterpriseam.com/uae/2026/08/10/moodys-warns-bank-ai-race-risks-systemic-dependency-on-silicon-valley/",
+      "published_at": "2026-08-10",
+      "event_date": "2026-07-28",
+      "source_type": "aggregator",
+      "fetch_status": "success",
+      "decision": "rejected",
+      "rejection_reason": "查證後發現本篇所依據的Moody's『Bank of the Future』分析報告已於2026年7月下旬（late July）發布，本篇（及其原始來源The Guardian報導）僅摘述該舊報告內容，未見新的數據、採訪或實質分析，依新鮮度規則第5點不得以2026-08-10之刊登日入選；event_date以Moody's報告發布月份估算為2026-07-28，已遠超72小時新鮮度窗口。EnterpriseAM本身亦僅轉引The Guardian報導，屬轉載性質，source_type標記為aggregator。",
+      "duplicate_of": null
+    },
+    {
+      "title": "Banks facing AI concentration risk",
+      "source": "Finextra",
+      "url": "https://www.finextra.com/newsarticle/48225/banks-facing-ai-concentration-risk",
+      "published_at": "2026-08-11",
+      "event_date": "2026-07-28",
+      "source_type": "independent_media",
+      "fetch_status": "failed",
+      "decision": "rejected",
+      "rejection_reason": "WebFetch對本頁回傳HTTP 403 Forbidden，無法開啟原文核對標題、內容與引述是否相符，依搜尋與驗證流程規則不得採用；且與EnterpriseAM條目報導同一Moody's舊報告事件，即便可開啟原文，event_date仍會落在72小時窗口之外。",
+      "duplicate_of": "https://enterpriseam.com/uae/2026/08/10/moodys-warns-bank-ai-race-risks-systemic-dependency-on-silicon-valley/"
+    },
+    {
+      "title": "WealthAi and Flanks Partner to Eliminate Costly Data Silos in Wealth Management",
+      "source": "FF News",
+      "url": "https://ffnews.com/news/wealthai-and-flanks-partner-to-eliminate-costly-data-silos-in-wealth-management",
+      "published_at": "2026-07-28",
+      "event_date": "2026-07-02",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "rejected",
+      "rejection_reason": "原文標示發布日期為2026年7月2日（2026年7月28日更新），event_date與published_at皆遠超72小時新鮮度窗口，不符合選題規則。",
+      "duplicate_of": null
+    },
+    {
+      "title": "SEC AI checks put firms' governance under scrutiny",
+      "source": "FinTech Global",
+      "url": "https://fintech.global/2026/08/07/sec-ai-checks-put-firms-governance-under-scrutiny/",
+      "published_at": "2026-08-07",
+      "event_date": "2026-08-07",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "rejected",
+      "rejection_reason": "event_date與published_at皆為2026-08-07，距報告產生時間（2026-08-12）已超過72小時，不符合新鮮度規則第7點的72小時選題窗，故淘汰。",
+      "duplicate_of": null
+    }
+  ]
+}

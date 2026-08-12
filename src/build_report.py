@@ -34,6 +34,13 @@ DOCS_INDEX_PATH = REPO_ROOT / "docs" / "index.html"
 
 MERMAID_CDN = "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"
 
+SOURCE_TYPE_LABELS = {
+    "independent_media": "獨立媒體報導",
+    "official_source": "官方來源",
+    "press_release": "企業新聞稿",
+    "aggregator": "轉載/聚合網站",
+}
+
 PAGE_TEMPLATE = """<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -50,17 +57,18 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   h2 {{ font-size: 1.2rem; margin-bottom: 0.2rem; }}
   .subtitle {{ color: #666; font-size: 0.85rem; margin-bottom: 1.5rem; }}
   .meta {{ color: #666; font-size: 0.9rem; margin-bottom: 0.8rem; }}
+  .source-type-badge {{ display: inline-block; padding: 0.1rem 0.5rem; border-radius: 999px;
+                          font-size: 0.75rem; background: #eee; color: #333;
+                          margin-left: 0.4rem; }}
+  .freshness-note {{ color: #666; font-size: 0.85rem; margin-bottom: 0.8rem;
+                       font-style: italic; }}
   ul {{ margin-top: 0.3rem; }}
   a.back {{ display: inline-block; margin-bottom: 1.5rem; }}
-  .mermaid-wrap {{ cursor: zoom-in; }}
   .archive-list {{ margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #ddd; }}
-  #zoom-overlay {{ position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
-                    display: none; align-items: center; justify-content: center;
-                    padding: 2rem; z-index: 1000; cursor: zoom-out; }}
-  #zoom-overlay.open {{ display: flex; }}
-  #zoom-content {{ max-width: 95vw; max-height: 95vh; }}
-  #zoom-content svg {{ max-width: 95vw; max-height: 95vh; width: auto !important;
-                        height: auto !important; display: block; }}
+  .mermaid-container {{ width: 100%; max-width: 100%; overflow-x: auto;
+                          background: #ffffff; padding: 16px; border-radius: 12px;
+                          box-sizing: border-box; }}
+  .mermaid-container svg {{ display: block; max-width: 100%; height: auto; }}
 </style>
 </head>
 <body>
@@ -68,42 +76,18 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <div class="subtitle">產生時間: {generated_at}</div>
 {articles}
 {archive_links}
-<div id="zoom-overlay"><div id="zoom-content"></div></div>
-<script>
-window.addEventListener("load", function () {{
-  document.querySelectorAll(".mermaid-wrap").forEach(function (wrap) {{
-    wrap.addEventListener("click", function () {{
-      var svg = wrap.querySelector("svg");
-      if (!svg) {{
-        return;
-      }}
-      var content = document.getElementById("zoom-content");
-      content.innerHTML = "";
-      content.appendChild(svg.cloneNode(true));
-      document.getElementById("zoom-overlay").classList.add("open");
-    }});
-  }});
-  document.getElementById("zoom-overlay").addEventListener("click", function () {{
-    this.classList.remove("open");
-  }});
-  document.addEventListener("keydown", function (e) {{
-    if (e.key === "Escape") {{
-      document.getElementById("zoom-overlay").classList.remove("open");
-    }}
-  }});
-}});
-</script>
 </body>
 </html>
 """
 
 ARTICLE_TEMPLATE = """<article>
   <h2>{title_zh}</h2>
-  <div class="meta">來源: {source} | 日期: {published_at} | <a href="{url}" target="_blank" rel="noopener noreferrer">原文連結</a></div>
+  <div class="meta">來源: {source}<span class="source-type-badge">{source_type_label}</span> | 發布日期: {published_at} | 事件日期: {event_date} | <a href="{url}" target="_blank" rel="noopener noreferrer">原文連結</a></div>
+  <div class="freshness-note">新鮮度說明: {freshness_note}</div>
   <ul>
 {key_points}
   </ul>
-  <div class="mermaid-wrap" title="點擊放大">
+  <div class="mermaid-container">
     <pre class="mermaid">
 {mermaid}
     </pre>
@@ -124,10 +108,16 @@ def render_article(article: dict) -> str:
     key_points_html = "\n".join(
         f"    <li>{escape(point)}</li>" for point in article["key_points"]
     )
+    source_type_label = SOURCE_TYPE_LABELS.get(
+        article["source_type"], article["source_type"]
+    )
     return ARTICLE_TEMPLATE.format(
         title_zh=escape(article["title_zh"]),
         source=escape(article["source"]),
+        source_type_label=escape(source_type_label),
         published_at=escape(article["published_at"]),
+        event_date=escape(article["event_date"]),
+        freshness_note=escape(article["freshness_note"]),
         url=escape(article["url"]),
         key_points=key_points_html,
         mermaid=escape(article["mermaid"]),
