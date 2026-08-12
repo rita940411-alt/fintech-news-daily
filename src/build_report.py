@@ -1,26 +1,32 @@
 #!/usr/bin/env python3
-"""將每日金融科技新聞 JSON 轉換成可發布至 GitHub Pages 的靜態 HTML。
+"""將金融科技新聞日報 JSON 轉換成可發布至 GitHub Pages 的靜態 HTML。
 
 用法:
-    python3 build_report.py <path/to/YYYY-MM-DD.json>
+    python3 build_report.py [path/to/report.json]
+
+不指定路徑時，預設讀取 data/latest.json。
 
 行為:
-    - 先呼叫 validate_news.validate_daily_file 確認資料合法，不合法就中止、不產生檔案。
-    - 產生單日報告頁面 docs/archive/YYYY-MM-DD.html。
-    - 重新掃描 docs/archive/*.html，重建首頁索引 docs/index.html。
+    - 先呼叫 validate_news.validate_daily_file 確認資料合法，不合法就中止、不寫入任何檔案
+      （既有的 docs/index.html、docs/archive/*.html 維持不變）。
+    - 產生 docs/archive/YYYY-MM-DD.html（檔名日期取自 JSON 內的 report_date 欄位）。
+    - 產生 docs/index.html（顯示最新報告內容，並附上歷史日報清單）。
+    - 所有輸出一律先寫入暫存檔，成功後才以原子操作取代正式檔案。
 
-僅使用 Python 3 標準函式庫（json / pathlib / html / datetime / argparse）。
+僅使用 Python 3 標準函式庫（json / pathlib / html / datetime / tempfile / os / argparse）。
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
+import tempfile
 from html import escape
 from pathlib import Path
 
-from validate_news import validate_daily_file
+from validate_news import DEFAULT_DATA_PATH, validate_daily_file
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DOCS_ARCHIVE_DIR = REPO_ROOT / "docs" / "archive"
@@ -32,58 +38,85 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<title>金融科技新聞日報 - {date}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>金融科技新聞日報 - {report_date}</title>
 <script src="{mermaid_cdn}"></script>
 <script>mermaid.initialize({{ startOnLoad: true }});</script>
 <style>
   body {{ font-family: -apple-system, "Noto Sans TC", sans-serif; max-width: 860px;
           margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }}
   article {{ border-bottom: 1px solid #ddd; padding: 1.5rem 0; }}
-  h1 {{ font-size: 1.5rem; }}
+  h1 {{ font-size: 1.5rem; margin-bottom: 0.2rem; }}
   h2 {{ font-size: 1.2rem; margin-bottom: 0.2rem; }}
+  .subtitle {{ color: #666; font-size: 0.85rem; margin-bottom: 1.5rem; }}
   .meta {{ color: #666; font-size: 0.9rem; margin-bottom: 0.8rem; }}
   ul {{ margin-top: 0.3rem; }}
   a.back {{ display: inline-block; margin-bottom: 1.5rem; }}
+  .mermaid-wrap {{ cursor: zoom-in; }}
+  .archive-list {{ margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #ddd; }}
+  #zoom-overlay {{ position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+                    display: none; align-items: center; justify-content: center;
+                    padding: 2rem; z-index: 1000; cursor: zoom-out; }}
+  #zoom-overlay.open {{ display: flex; }}
+  #zoom-content {{ max-width: 95vw; max-height: 95vh; }}
+  #zoom-content svg {{ max-width: 95vw; max-height: 95vh; width: auto !important;
+                        height: auto !important; display: block; }}
 </style>
 </head>
 <body>
-<a class="back" href="../index.html">&larr; 回首頁</a>
-<h1>金融科技新聞日報 - {date}</h1>
+{nav}<h1>金融科技新聞日報 - {report_date}</h1>
+<div class="subtitle">產生時間: {generated_at}</div>
 {articles}
+{archive_links}
+<div id="zoom-overlay"><div id="zoom-content"></div></div>
+<script>
+window.addEventListener("load", function () {{
+  document.querySelectorAll(".mermaid-wrap").forEach(function (wrap) {{
+    wrap.addEventListener("click", function () {{
+      var svg = wrap.querySelector("svg");
+      if (!svg) {{
+        return;
+      }}
+      var content = document.getElementById("zoom-content");
+      content.innerHTML = "";
+      content.appendChild(svg.cloneNode(true));
+      document.getElementById("zoom-overlay").classList.add("open");
+    }});
+  }});
+  document.getElementById("zoom-overlay").addEventListener("click", function () {{
+    this.classList.remove("open");
+  }});
+  document.addEventListener("keydown", function (e) {{
+    if (e.key === "Escape") {{
+      document.getElementById("zoom-overlay").classList.remove("open");
+    }}
+  }});
+}});
+</script>
 </body>
 </html>
 """
 
 ARTICLE_TEMPLATE = """<article>
-  <h2>{title}</h2>
-  <div class="meta">來源: {source} | 日期: {date} | <a href="{url}" target="_blank" rel="noopener noreferrer">原文連結</a></div>
+  <h2>{title_zh}</h2>
+  <div class="meta">來源: {source} | 日期: {published_at} | <a href="{url}" target="_blank" rel="noopener noreferrer">原文連結</a></div>
   <ul>
 {key_points}
   </ul>
-  <pre class="mermaid">
+  <div class="mermaid-wrap" title="點擊放大">
+    <pre class="mermaid">
 {mermaid}
-  </pre>
+    </pre>
+  </div>
 </article>
 """
 
-INDEX_TEMPLATE = """<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-<meta charset="UTF-8">
-<title>金融科技新聞日報</title>
-<style>
-  body {{ font-family: -apple-system, "Noto Sans TC", sans-serif; max-width: 860px;
-          margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }}
-  li {{ margin: 0.3rem 0; }}
-</style>
-</head>
-<body>
-<h1>金融科技新聞日報</h1>
-<ul>
+ARCHIVE_LIST_TEMPLATE = """<div class="archive-list">
+  <h2>歷史日報</h2>
+  <ul>
 {entries}
-</ul>
-</body>
-</html>
+  </ul>
+</div>
 """
 
 
@@ -92,67 +125,133 @@ def render_article(article: dict) -> str:
         f"    <li>{escape(point)}</li>" for point in article["key_points"]
     )
     return ARTICLE_TEMPLATE.format(
-        title=escape(article["title"]),
+        title_zh=escape(article["title_zh"]),
         source=escape(article["source"]),
-        date=escape(article["date"]),
+        published_at=escape(article["published_at"]),
         url=escape(article["url"]),
         key_points=key_points_html,
-        mermaid=article["mermaid"],
+        mermaid=escape(article["mermaid"]),
     )
 
 
-def build_daily_page(json_path: Path) -> Path:
+def render_archive_links(archive_dir: Path = DOCS_ARCHIVE_DIR) -> str:
+    if archive_dir.exists():
+        dates = sorted((p.stem for p in archive_dir.glob("*.html")), reverse=True)
+    else:
+        dates = []
+
+    if dates:
+        entries = "\n".join(
+            f'    <li><a href="archive/{d}.html">{escape(d)}</a></li>' for d in dates
+        )
+    else:
+        entries = "    <li>尚無歷史日報</li>"
+
+    return ARCHIVE_LIST_TEMPLATE.format(entries=entries)
+
+
+def render_page(
+    data: dict, *, is_archive_page: bool, archive_dir: Path = DOCS_ARCHIVE_DIR
+) -> str:
+    articles_html = "\n".join(render_article(a) for a in data["articles"])
+    nav_html = (
+        '<a class="back" href="../index.html">&larr; 回首頁</a>\n' if is_archive_page else ""
+    )
+    archive_links_html = "" if is_archive_page else render_archive_links(archive_dir)
+
+    return PAGE_TEMPLATE.format(
+        report_date=escape(data["report_date"]),
+        generated_at=escape(data["generated_at"]),
+        mermaid_cdn=MERMAID_CDN,
+        nav=nav_html,
+        articles=articles_html,
+        archive_links=archive_links_html,
+    )
+
+
+def _write_atomic(path: Path, content: str) -> None:
+    """先寫入同目錄下的暫存檔，成功後再以原子操作取代正式檔案。"""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp_name = tempfile.mkstemp(
+        dir=path.parent, prefix=f".{path.name}.", suffix=".tmp"
+    )
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(content)
+        os.replace(tmp_name, path)
+    except BaseException:
+        try:
+            os.unlink(tmp_name)
+        except OSError:
+            pass
+        raise
+
+
+def build_report(
+    json_path: Path,
+    *,
+    archive_dir: Path = DOCS_ARCHIVE_DIR,
+    index_path: Path = DOCS_INDEX_PATH,
+) -> tuple[Path, Path]:
+    """驗證並產生 <archive_dir>/YYYY-MM-DD.html 與 <index_path>。
+
+    archive_dir / index_path 預設為正式的 docs/archive、docs/index.html；可覆寫以指向
+    暫存測試目錄。驗證失敗時拋出 ValueError，且不會寫入或覆蓋任何既有的 HTML 檔案。
+    """
     errors = validate_daily_file(json_path)
     if errors:
         raise ValueError(
-            f"{json_path} 未通過驗證，無法產生報告:\n" + "\n".join(f"  - {e}" for e in errors)
+            f"{json_path} 未通過驗證，無法產生報告:\n"
+            + "\n".join(f"  - {e}" for e in errors)
         )
 
-    articles = json.loads(json_path.read_text(encoding="utf-8"))
-    report_date = json_path.stem  # 期望檔名為 YYYY-MM-DD.json
+    data = json.loads(json_path.read_text(encoding="utf-8"))
+    report_date = data["report_date"]
 
-    articles_html = "\n".join(render_article(a) for a in articles)
-    page_html = PAGE_TEMPLATE.format(
-        date=escape(report_date), mermaid_cdn=MERMAID_CDN, articles=articles_html
+    archive_path = archive_dir / f"{report_date}.html"
+    _write_atomic(archive_path, render_page(data, is_archive_page=True))
+
+    # 索引頁需要看到剛寫入的當日 archive 檔案，因此在其後才產生。
+    _write_atomic(
+        index_path, render_page(data, is_archive_page=False, archive_dir=archive_dir)
     )
 
-    DOCS_ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
-    out_path = DOCS_ARCHIVE_DIR / f"{report_date}.html"
-    out_path.write_text(page_html, encoding="utf-8")
-    return out_path
-
-
-def rebuild_index() -> Path:
-    dates = sorted(
-        (p.stem for p in DOCS_ARCHIVE_DIR.glob("*.html")),
-        reverse=True,
-    )
-    entries = "\n".join(
-        f'  <li><a href="archive/{d}.html">{escape(d)}</a></li>' for d in dates
-    )
-    if not entries:
-        entries = "  <li>尚無已發布的日報</li>"
-
-    index_html = INDEX_TEMPLATE.format(entries=entries)
-    DOCS_INDEX_PATH.parent.mkdir(parents=True, exist_ok=True)
-    DOCS_INDEX_PATH.write_text(index_html, encoding="utf-8")
-    return DOCS_INDEX_PATH
+    return archive_path, index_path
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("json_file", type=Path, help="每日新聞 JSON 檔案路徑")
+    parser.add_argument(
+        "json_file",
+        type=Path,
+        nargs="?",
+        default=DEFAULT_DATA_PATH,
+        help=f"報告 JSON 檔案路徑（預設: {DEFAULT_DATA_PATH}）",
+    )
+    parser.add_argument(
+        "--archive-dir",
+        type=Path,
+        default=DOCS_ARCHIVE_DIR,
+        help=f"輸出 archive HTML 的目錄（預設: {DOCS_ARCHIVE_DIR}）",
+    )
+    parser.add_argument(
+        "--index-file",
+        type=Path,
+        default=DOCS_INDEX_PATH,
+        help=f"輸出 index.html 的路徑（預設: {DOCS_INDEX_PATH}）",
+    )
     args = parser.parse_args(argv)
 
     try:
-        out_path = build_daily_page(args.json_file)
+        archive_path, index_path = build_report(
+            args.json_file, archive_dir=args.archive_dir, index_path=args.index_file
+        )
     except ValueError as exc:
         print(str(exc), file=sys.stderr)
         return 1
 
-    index_path = rebuild_index()
-    print(f"已產生: {out_path}")
-    print(f"已更新索引: {index_path}")
+    print(f"已產生: {archive_path}")
+    print(f"已產生: {index_path}")
     return 0
 
 
