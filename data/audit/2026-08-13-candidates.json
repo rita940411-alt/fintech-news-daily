@@ -1,0 +1,128 @@
+{
+  "report_date": "2026-08-13",
+  "searched_at": "2026-08-13T09:36:22+08:00",
+  "timezone": "Asia/Taipei",
+  "candidate_count": 10,
+  "candidates": [
+    {
+      "title": "Yuno raises $45m Series B to scale payments OS",
+      "source": "FinTech Global",
+      "url": "https://fintech.global/2026/08/12/yuno-raises-45m-series-b-to-scale-payments-os/",
+      "published_at": "2026-08-12",
+      "event_date": "2026-08-12",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "selected",
+      "rejection_reason": null,
+      "duplicate_of": null
+    },
+    {
+      "title": "The CUBE Read notes 3 shifts in financial services regulation",
+      "source": "FinTech Global",
+      "url": "https://fintech.global/2026/08/11/the-cube-read-notes-3-shifts-in-financial-services-regulation/",
+      "published_at": "2026-08-11",
+      "event_date": "2026-08-11",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "selected",
+      "rejection_reason": null,
+      "duplicate_of": null
+    },
+    {
+      "title": "Fisent Technologies Accelerates Growth with $4.3 Million Venture Round to Expand Adoption of Applied GenAI Process Automation for Regulated Enterprises",
+      "source": "GlobeNewswire (Fisent Technologies 新聞稿，經 Manila Times TMT Newswire 轉載)",
+      "url": "https://www.manilatimes.net/2026/08/11/tmt-newswire/globenewswire/fisent-technologies-accelerates-growth-with-43-million-venture-round-to-expand-adoption-of-applied-genai-process-automation-for-regulated-enterprises/2403120",
+      "published_at": "2026-08-11",
+      "event_date": "2026-08-11",
+      "source_type": "press_release",
+      "fetch_status": "success",
+      "decision": "selected",
+      "rejection_reason": null,
+      "duplicate_of": null
+    },
+    {
+      "title": "Financial Firms Put AI to Work Across 27 Tasks, Study Finds",
+      "source": "PYMNTS",
+      "url": "https://www.pymnts.com/news/artificial-intelligence/2026/financial-firms-put-ai-to-work-across-27-tasks-study-finds/",
+      "published_at": "2026-08-07",
+      "event_date": "2026-08-07",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "rejected",
+      "rejection_reason": "published_at 與 event_date 皆為 2026-08-07，距報告日 2026-08-13 已超過 72 小時新鮮度窗口；且內容主要重述 PYMNTS Intelligence 今年稍早（3月調查、5月發布）之舊研究報告數據，未查證有新增事實、數據或獨立分析，依第三節第5點淘汰。",
+      "duplicate_of": null
+    },
+    {
+      "title": "Banks facing AI concentration risk",
+      "source": "Finextra",
+      "url": "https://www.finextra.com/newsarticle/48225/banks-facing-ai-concentration-risk",
+      "published_at": "2026-08-10",
+      "event_date": "2026-07-28",
+      "source_type": "independent_media",
+      "fetch_status": "failed",
+      "decision": "rejected",
+      "rejection_reason": "WebFetch 開啟原文回傳 403 Forbidden，無法完整核對原文內容；經交叉查證，本篇報導之核心事件為 Moody's《Bank of the Future》報告，發布於 2026-07-28，event_date 已超過 72 小時新鮮度窗口，縱使二次報導日期較近亦不符第三節二次報導規則，故淘汰。",
+      "duplicate_of": null
+    },
+    {
+      "title": "SEC AI checks put firms' governance under scrutiny",
+      "source": "FinTech Global",
+      "url": "https://fintech.global/2026/08/07/sec-ai-checks-put-firms-governance-under-scrutiny/",
+      "published_at": "2026-08-07",
+      "event_date": "2026-08-07",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "rejected",
+      "rejection_reason": "event_date 與 published_at 皆為 2026-08-07，距報告日 2026-08-13 已超過 72 小時新鮮度窗口，淘汰。",
+      "duplicate_of": null
+    },
+    {
+      "title": "RMSG taps Bretton AI to scale regulator-ready compliance",
+      "source": "FinTech Global",
+      "url": "https://fintech.global/2026/08/03/rmsg-taps-bretton-ai-to-scale-regulator-ready-compliance/",
+      "published_at": "2026-08-03",
+      "event_date": "2026-08-03",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "rejected",
+      "rejection_reason": "event_date 與 published_at 皆為 2026-08-03，距報告日 2026-08-13 已超過 72 小時新鮮度窗口，淘汰。",
+      "duplicate_of": null
+    },
+    {
+      "title": "Visa to buy fraud-detection firm BioCatch for $2.4 billion",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/08/03/visa-buys-biocatch-fraud-detection.html",
+      "published_at": "2026-08-03",
+      "event_date": "2026-08-03",
+      "source_type": "independent_media",
+      "fetch_status": "failed",
+      "decision": "rejected",
+      "rejection_reason": "WebFetch 開啟原文回傳 403 Forbidden；經其他來源（CNBC 標題快取、業界轉載）交叉查證事件發生於 2026-08-03，已超過 72 小時新鮮度窗口，縱使能開啟原文仍將因新鮮度不合格淘汰。",
+      "duplicate_of": null
+    },
+    {
+      "title": "Vestmark to power Vanguard's custom model portfolios",
+      "source": "FinTech Global",
+      "url": "https://fintech.global/2026/08/12/vestmark-to-power-vanguards-custom-model-portfolios/",
+      "published_at": "2026-08-12",
+      "event_date": "2026-08-12",
+      "source_type": "independent_media",
+      "fetch_status": "success",
+      "decision": "rejected",
+      "rejection_reason": "內容為模型投資組合交易、稅務管理與顧問服務基礎設施之商業安排，原文核對後確認未提及 AI 或數據分析能力，不符合選題規則優先主題（AI、金融科技與數據分析交集），淘汰。",
+      "duplicate_of": null
+    },
+    {
+      "title": "WealthReach and SageContent Launch Integration That Converts Advisor Video Into Search-Optimized Content Built to Attract Prospects",
+      "source": "MarTech Series (轉載自 Business Wire 新聞稿)",
+      "url": "https://martechseries.com/content/wealthreach-and-sagecontent-launch-integration-that-converts-advisor-video-into-search-optimized-content-built-to-attract-prospects/",
+      "published_at": "2026-08-12",
+      "event_date": "2026-08-11",
+      "source_type": "aggregator",
+      "fetch_status": "success",
+      "decision": "rejected",
+      "rejection_reason": "內容為顧問行銷影片轉換為 SEO 內容之產品整合，屬品牌宣傳／行銷工具類新聞，未涉及 AI 金融數據分析應用，且來源為新聞稿轉載網站、缺乏獨立採編內容，不符選題規則與來源分級要求，淘汰。",
+      "duplicate_of": null
+    }
+  ]
+}
