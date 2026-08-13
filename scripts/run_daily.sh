@@ -39,7 +39,14 @@ if [[ -z "$CLAUDE_BIN" ]]; then
 fi
 
 "$CLAUDE_BIN" -p "/fintech-news-daily" \
-  --allowedTools "Read" "Write" "Edit" "Bash(python3 *)" "Bash(git *)"
+  --allowedTools \
+  "Read" \
+  "Write" \
+  "Edit" \
+  "WebSearch" \
+  "WebFetch" \
+  "Bash(python3 *)" \
+  "Bash(git *)"
 
 if [[ $? -ne 0 ]]; then
     echo "ERROR: Claude Code failed"
